@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\proyek;
 use App\category;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class proyekController extends Controller
@@ -21,6 +22,7 @@ class proyekController extends Controller
         'deskripsi' => 'required',
         'min_investasi' => 'required',
         'target_investasi' => 'required',
+        'keuntungan' => 'required',
         'deadline' => 'required',
         'lokasi' => 'required',
         'foto1' => 'required|image|mimes:png,jpg,jpeg',
@@ -33,6 +35,7 @@ class proyekController extends Controller
       'nama' => request('nama'),
       'lokasi'=> request('lokasi'),
       'deskripsi' => request('deskripsi'),
+      'keuntungan' => request('keuntungan'),
       'min_investasi' => request('min_investasi'),
       'target_investasi' => request('target_investasi'),
       'deadline' => request('deadline'),
@@ -43,11 +46,15 @@ class proyekController extends Controller
       'foto4' => request('foto4') -> store('foto'),
       'user_id' => auth()->id()
     ]);
-    return redirect()->route('proyek.create')->withInfo('surat telah dikirim');
+    return redirect('/proyek/index');
     }
 
     public function index(){
-      $proyek = proyek::all();
+      // $proyek = proyek::all()->where('proyeks.status', '=', '0');
+      $proyek = DB::table('proyeks')
+                      ->where('proyeks.status', '=', '0')
+                      ->paginate(10);
+                      // ->get();
       return view('proyek.index',compact('proyek'));
     }
 
@@ -55,7 +62,78 @@ class proyekController extends Controller
       $result = DB::table('proyeks')
                       ->where('proyeks.id', '=', $id)
                       ->get();
-      return view('proyek.product', compact('result'));
+      $result_invest= DB::table('investasis')
+                      ->where('investasis.proyek_id','=',$id)
+                      ->sum('jml_investasi');
+      $now=Carbon::now();
+      return view('proyek.product', compact('result','result_invest','now'));
     }
 
+    public function listProyek(){
+      // $user = Auth::User();
+      $id_user = auth()->id();
+        // $id_user = auth()->id();
+        $result = DB::table('proyeks')
+                      //  ->join('proyeks','investasis.proyek_id','=','proyeks.id')
+                      //  ->select('investasis.id as investasiID','investasis.*', 'proyeks.*')
+                       ->where('proyeks.user_id', $id_user) 
+                      //  ->where('proyeks.status', '=', '0')
+                       ->get();
+                //    dd($result);
+     return view('proyek.listProyek', compact('result'));
+    }
+
+    public function listInvestor($id){
+        $result = DB::table('proyeks')
+                       ->join('investasis','proyeks.id','=','investasis.proyek_id')
+                       ->join('users', 'investasis.user_id','=','users.id')
+                      //  ->select('investasis.id as investasiID','investasis.*', 'proyeks.*')
+                      //  ->where('proyeks.user_id', $id_user) 
+                      //  ->where('proyeks.status', '=', '0')
+                       ->where('investasis.status', '=', '3')
+                       ->get();
+                //    dd($result);
+     return view('proyek.listInvestor', compact('result'));
+    }
+
+
+    public function uploadBukti($id){
+      proyek::where('id', $id)-> update([
+          'status' => request('status'),
+          'bukti' => request('bukti')-> store('foto'),
+        ]);
+      
+        return redirect('/proyek/listProyek');
+  }
+
+  public function editProyek($id){
+    $result = DB::table('proyeks')
+                    ->join('categories', 'proyeks.category_id','=','categories.id')
+                    ->select('categories.nama as namaKategori','categories.id as idCategory','categories.*', 'proyeks.*')
+                    ->where('proyeks.id', '=', $id)
+                    ->get();
+    return view('proyek.editProyek', compact('result'));
+  }
+
+  public function updateProyek($id){
+    proyek::where('id', $id)-> update([
+      'nama' => request('nama'),
+      'lokasi'=> request('lokasi'),
+      'deskripsi' => request('deskripsi'),
+      'keuntungan' => request('keuntungan'),
+      'min_investasi' => request('min_investasi'),
+      'target_investasi' => request('target_investasi'),
+      'deadline' => request('deadline'),
+      'category_id' => request('category_id'),
+      'foto1' => request('foto1') -> store('foto'),
+      'foto2' => request('foto2') -> store('foto'),
+      'foto3' => request('foto3') -> store('foto'),
+      'foto4' => request('foto4') -> store('foto'),
+      'user_id' => auth()->id()
+    ]);
+  
+    return redirect('/proyek/listProyek');
+  }
+
+    
 }

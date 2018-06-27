@@ -20,7 +20,8 @@ class CreateInvestasisTable extends Migration
             $table->integer('no_rekening');
             $table->integer('jml_investasi');
             $table->integer('jml_keuntungan');
-            $table->integer('konfirmasi');
+            $table->string('konfirmasi');
+            $table->integer('status')->default('0');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('proyek_id')->references('id')->on('proyeks');

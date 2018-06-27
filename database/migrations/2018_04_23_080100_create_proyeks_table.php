@@ -27,6 +27,8 @@ class CreateProyeksTable extends Migration
             $table->string('foto2');
             $table->string('foto3');
             $table->string('foto4');
+            $table->string('keuntungan');
+            $table->integer('status')->default('0');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('category_id')->references('id')->on('categories');
