@@ -10,7 +10,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\ProyekRepo as PRepo;
-
+use App\InvestRepo as IRepo;
 class proyekController extends Controller
 {
     
@@ -18,27 +18,31 @@ class proyekController extends Controller
     
     public function product($id){
       $repo=new PRepo();
+      $IRepo=new IRepo();
       $result = $repo->getProyekData($id);
-      $result_invest=$repo->getInvestProyek($id);
-      $now=$repo->getWaktu();
+      $result_invest=$IRepo->getInvestProyek($id);
+      $now=$IRepo->getWaktu();
       return view('proyek.product', compact('result','result_invest','now'));
     }
     public function create(){
-      $repo=new PRepo();
+      
       $category = $repo->getCategory();
       return view('proyek.create', compact('category'));
     }
     public function index(){
-      $repo=new PRepo();
+      
       // $proyek = proyek::all()->where('proyeks.status', '=', '0');
       $proyek = proyek::where('proyeks.status', '=', '0')
                       ->paginate(10);
                       // ->get();
-      $now=$repo->getWaktu();
+      $now=$IRepo->getWaktu();
       return view('proyek.index',compact('proyek','now'));
     }
+    public function status(){
+
+    }
     public function listProyek(){
-      $repo=new PRepo();
+      
       // $user = Auth::User();
       $id_user = auth()->id();
            // $id_user = auth()->id();
@@ -46,18 +50,18 @@ class proyekController extends Controller
      return view('proyek.listProyek', compact('result'));
     }
 
-    // public function listInvestor($id){
-    //     $result = DB::table('proyeks')
-    //                    ->join('investasis','proyeks.id','=','investasis.proyek_id')
-    //                    ->join('users', 'investasis.user_id','=','users.id')
-    //                   //  ->select('investasis.id as investasiID','investasis.*', 'proyeks.*')
-    //                   //  ->where('proyeks.user_id', $id_user) 
-    //                   //  ->where('proyeks.status', '=', '0')
-    //                    ->where('investasis.status', '=', '3')
-    //                    ->get();
-    //             //    dd($result);
-    //  return view('proyek.listInvestor', compact('result'));
-    // }
+    public function listInvestor($id){
+        $result = DB::table('proyeks')
+                       ->join('investasis','proyeks.id','=','investasis.proyek_id')
+                       ->join('users', 'investasis.user_id','=','users.id')
+                      //  ->select('investasis.id as investasiID','investasis.*', 'proyeks.*')
+                      //  ->where('proyeks.user_id', $id_user) 
+                      //  ->where('proyeks.status', '=', '0')
+                       ->where('investasis.status', '=', '3')
+                       ->get();
+                //    dd($result);
+     return view('proyek.listInvestor', compact('result'));
+    }
     public function store(){
       $this->validate(request(),[
         'nama' => 'required|max:10',

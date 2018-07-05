@@ -77,10 +77,14 @@
       <h5>profit dari keuntungan proyek</h5>
       <?php
                           
+                          $abc=99;
                           $adameong=date_create($product->deadline);
                           $meong=date_create($now);
                           $diff=date_diff($meong,$adameong);
-                          echo $diff->format("%a hari lagi");
+                          
+                          echo $diff->format("%R%a hari lagi");
+                          $x= $diff->format("%R%a");
+                          
                           ?>
       <!-- </br>
       <span class="product-available">Skema</span>
@@ -109,8 +113,13 @@
                 <input type="number" id="no_rekening" name="no_rekening" placeholder="Nomor rekening">
               </div>
             </br></br> -->
+            <?php 
+            if($x>="0"):?>
             <button id="send" type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>Investasi</button><br>
-            <button id="send" type="submit" class="add-to-cart-btn-2">Waktu Habis</button>
+            <?php else:?>
+            <button id="send" type="submit" class="add-to-cart-btn-2" disabled>Waktu Habis</button>
+            <?php endif; ?>
+            
           </div>
           </div>
           </form>

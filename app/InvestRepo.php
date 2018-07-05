@@ -6,7 +6,7 @@ use App\investasi;
 use App\User;
 use Carbon\Carbon;
 use Auth;
-interface UserRepository {
+interface UserRepo {
   public function getWaktu();
   public function cart($id_user);
   public function create($id,$userid);
@@ -15,7 +15,7 @@ interface UserRepository {
   public function getShipping($id);
 }
 
-class InvestRepo implements UserRepository{
+class InvestRepo implements UserRepo{
     public function getWaktu(){
         return Carbon::now();
       }
@@ -56,13 +56,13 @@ class InvestRepo implements UserRepository{
         ->get();
         return($result);
     }
-    // public function upload($id){
-    //     $result = investasi::where('id', $id)-> update([
-    //         'status' => request('status'),
-    //         'konfirmasi' => request('bukti')-> store('foto'),
-    //       ]);
-    //     return($result);
-    // }
+    public function upload($id){
+        $result = investasi::where('id', $id)-> update([
+            'status' => request('status'),
+            'konfirmasi' => request('bukti')-> store('foto'),
+          ]);
+        return($result);
+    }
     public function update($id){
         $result = investasi::where('id', $id)-> update([
             'status' => request('status'),

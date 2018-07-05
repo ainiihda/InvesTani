@@ -15,13 +15,8 @@ interface UserRepository {
 }
 
 class ProyekRepo{
-    public function getWaktu(){
-        return Carbon::now();
-      }
-    public function getInvestProyek($id){
 
-      return investasi::where('investasis.proyek_id','=',$id)->sum('jml_investasi');
-    }
+    
     public function getProyekData($id){ 
         return proyek::where('proyeks.id', '=', $id)->get();
     }
