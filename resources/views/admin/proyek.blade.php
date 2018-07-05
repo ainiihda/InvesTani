@@ -32,6 +32,7 @@
                         <form action="{{route('admin.proyekSelesai', $proyek->proyekID)}}" method="post" novalidate>
                                 {{ csrf_field() }}
                                 {{ method_field('PATCH') }}
+                                <input type="hidden" id="investasiStatus" name="investasiStatus" value="5">
                                 <input type="hidden" id="status" name="status" value="2">
                           <button id="send" type="submit" class="btn btn-info">Selesai</button>
                           </form>

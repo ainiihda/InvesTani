@@ -72,7 +72,7 @@
           <div>
           
           <h2>Rp. {{ $result_invest}}</h2><span class="product-available">
-          <h5>terkumpul dari target Rp.{{ $product->target_investasi }}</h5></br>
+          <h5>terkumpul dari target Rp. {{ $product->target_investasi }}</h5></br>
       <h2> {{ $product-> keuntungan}} %</h2>
       <h5>profit dari keuntungan proyek</h5>
       <?php
@@ -80,7 +80,7 @@
                           $adameong=date_create($product->deadline);
                           $meong=date_create($now);
                           $diff=date_diff($meong,$adameong);
-                          echo $diff->format("%a days");
+                          echo $diff->format("%a hari lagi");
                           ?>
       <!-- </br>
       <span class="product-available">Skema</span>
@@ -109,7 +109,8 @@
                 <input type="number" id="no_rekening" name="no_rekening" placeholder="Nomor rekening">
               </div>
             </br></br> -->
-            <button id="send" type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>Investasi</button>
+            <button id="send" type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>Investasi</button><br>
+            <button id="send" type="submit" class="add-to-cart-btn-2">Waktu Habis</button>
           </div>
           </div>
           </form>

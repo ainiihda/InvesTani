@@ -18,9 +18,8 @@
                 <td> {{ $result->nama }}</td>
                 <td> {{ $result->jml_investasi }} </td>
                 <td> {{ $result->jml_keuntungan }} </td>
-                <!-- <td>
-                <img src="{{ asset('storage/'.$result->konfirmasi) }}" alt="">
-                </td> -->
+                
+                
             </tr>
         @endforeach
         </tbody>

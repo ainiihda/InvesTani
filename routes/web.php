@@ -18,6 +18,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/homepage', 'HomeController@homepage')->name('homepage');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/cart', 'CartController');
 
@@ -55,7 +56,6 @@ Route::patch('/proyek/{id}/updateProyek', 'proyekController@updateProyek') -> na
 
 Route::get('/proyek/{id}/investasi', 'investasiController@investasi') -> name('proyek.investasi');
 Route::get('/cart', 'investasiController@cart') -> name('cart.index');
-Route::delete('/{id}/cart', 'investasiController@destroyInvestasi') -> name('cart.deleteInvestasi');
 Route::get('/bukti', 'investasiController@bukti') -> name('bukti');
 Route::get('/cart/{id}/shipping', 'investasiController@shipping') -> name('cart.shipping');
 Route::patch('/cart/{id}/checkout', 'investasiController@update') -> name('cart.checkout');

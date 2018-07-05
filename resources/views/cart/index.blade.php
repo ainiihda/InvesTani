@@ -17,12 +17,7 @@
                 <td> {{ $result->nama }}</td>
                 <td> {{ $result->jml_investasi }} </td>
                 <td> {{ $result->jml_keuntungan }} </td>
-                <td> <button id="send" type="submit" class="btn btn-success"><a href="{{ route('cart.shipping', $result->investasiID)}}">Checkout</a></button>
-                <form action="{{ route('cart.deleteInvestasi', $result->investasiID) }}" method="post" novalidate>
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }} 
-                <button id="send" type="submit" class="btn btn-danger">Hapus</button> </td>
-                </form>
+                <td> <button id="send" type="submit" class="btn btn-success"><a href="{{ route('cart.shipping', $result->investasiID)}}">Checkout</a></button></td>
             </tr>
         @endforeach
         </tbody>

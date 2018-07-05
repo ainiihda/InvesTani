@@ -100,11 +100,13 @@
                       <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="category">Kategori <span class="required">*</span>
                         </label>
-                        <select name="category_id" id="" class="input-select">
-                          @foreach($category as $category)
-                            <option value="{{$category -> id}}">{{ $category -> nama }}</option>
-                          @endforeach
-                        </select>
+                        <div class="col-xs-2">
+                          <select name="category_id" id="" class="form-control input-select">
+                            @foreach($category as $category)
+                              <option value="{{$category -> id}}">{{ $category -> nama }}</option>
+                            @endforeach
+                          </select>
+                        </div>
                       </div>
                       <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lokasi">Lokasi <span class="required">*</span>
@@ -124,21 +126,21 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="target_investasi">Target Investasi <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <textarea id="target_investasi" required="required" name="target_investasi"  value="{{ old('target_investasi') }}" placeholder="Target Investasi" class="form-control col-md-7 col-xs-12"></textarea>
+                          <input type="number" id="target_investasi" required="required" name="target_investasi"  value="{{ old('target_investasi') }}" placeholder="Target Investasi" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="min_investasi">Minimum Investasi <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <textarea id="min_investasi" required="required" name="min_investasi"  value="{{ old('min_investasi') }}" placeholder="Minimum Investasi" class="form-control col-md-7 col-xs-12"></textarea>
+                          <input type="number" id="min_investasi" required="required" name="min_investasi"  value="{{ old('min_investasi') }}" placeholder="Minimum Investasi" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="keuntungan">Keuntungan Investasi <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="keuntungan" required="required" name="keuntungan"  value="{{ old('keuntungan') }}" placeholder="Tulis presentase keuntungan dalam persen" class="form-control col-md-7 col-xs-12"> %
+                          <input type="number" id="keuntungan" required="required" name="keuntungan"  value="{{ old('keuntungan') }}" placeholder="Tulis presentase keuntungan (dalam persen)" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="item form-group">

@@ -25,7 +25,7 @@
  		<link rel="stylesheet" href="{{ url('electro/css/font-awesome.min.css') }}">
 
  		<!-- Custom stlylesheet -->
- 		<link type="text/css" rel="stylesheet" href="{{ url('electro/css/style.css') }}"/>
+ 		<link type="text/css" rel="stylesheet" href="{{ url('electro/css/shit.css') }}"/>
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -65,7 +65,7 @@
 						<!-- LOGO -->
 						<div class="col-md-3">
 							<div class="header-logo">
-								<a href="#" class="logo">
+								<a href="{{route('homepage')}}" class="logo">
 									<img width="210" height="90" src="{{ asset('electro/img/Investani.png') }}" alt="">
 								</a>
 							</div>
@@ -73,64 +73,15 @@
 						<!-- /LOGO -->
 
 						<!-- ACCOUNT -->
-            @guest
+            
 						<div class="main-nav nav navbar-right">
 							<div class="header-ctn">
-							<!-- <ul class="main-nav nav navbar-right"> -->
-								<!-- Wishlist -->
-								<!-- <li class="hehe">
-									<a href="{{ route('login') }}">
-										{{ __('Login') }}
-									</a>
-								</li> -->
-								<!-- /Wishlist -->
-
-								<!-- Cart -->
-								<!-- <li class="hehe">
-									<a href="{{ route('register') }}">
-										{{ __('Register') }}
-									</a>
-								</li> -->
-								<!-- </ul> -->
-								<!-- @else -->
-								<!-- <ul class="main-nav nav navbar-right"> -->
-								<!-- <li class="hehe">
-										<a id="navbarDropdown" class="hehe" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-												{{ Auth::user()->name }} <span class="hehe"></span>
-										</a>
-
-										<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-											<a class="dropdown-item" href="{{ route('cart.index') }}">
-													{{ __('Chart') }}
-											</a>
-											<br>
-											<a class="dropdown-item" href="{{ route('bukti') }}">
-													{{ __('Bukti') }}
-											</a>
-											<br>
-											<a class="dropdown-item" href="{{ route('proyek.listProyek') }}">
-													{{ __('Proyek saya') }}
-											</a>
-											<br>
-										
-										<a class="dropdown-item" href="{{ route('logout') }}"
-													 onclick="event.preventDefault();
-																				 document.getElementById('logout-form').submit();">
-														{{ __('Logout') }}
-												</a>
-
-												<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-														@csrf
-												</form>
-										</div>
-								</li> -->
-							<!-- </ul> -->
-                <!-- @endguest -->
+							
 								<!-- SEARCH BAR -->
-								<ul class="main-nav nav navbar-nav">
-									<li class="hehe"><a href="#">Home</a></li>
-									<li class="active"><a href="{{ route('proyek.index') }}">Proyek Pemodalan</a></li>
-									<li class="hehe"><a href="#">Tentang Kami</a></li>
+								<ul class="main-nav nav navbar-nav pull-right">
+								<li class="hehe"><a href="{{route('homepage')}}">Home</a></li>
+									<li class="hehe"><a href="{{ route('proyek.index') }}">Proyek Pemodalan</a></li>
+									{{--  <li class="hehe"><a href="#">Tentang Kami</a></li>  --}}
 									<!-- <li class="hehe"><a href="#">Pertanyaan</a></li> -->
 
 
@@ -146,38 +97,40 @@
 										</a>
 									</li>
 				@else
-								<li class="hehe">
-									<a class="dropdown-toggle"  aria-expanded="true" href="{{ route('cart.index') }}">
-										<i class="fa fa-shopping-cart"></i>
-										<span> Cart (
+				<li class="hehe">
+					<a class="dropdown-toggle"  aria-expanded="true" href="{{ route('cart.index') }}">
+						
+						<span> Cart (
 
-										@if(DB::table('investasis')
+						@if(DB::table('investasis')
+										->where('user_id', Auth::user()->id)
+										->where('status', 0)
+										->count() > 0)
+								<?php
+										$adameong=DB::table('investasis')
 														->where('user_id', Auth::user()->id)
 														->where('status', 0)
-														->count() > 0)
-												<?php
-														$adameong=DB::table('investasis')
-																		->where('user_id', Auth::user()->id)
-																		->where('status', 0)
-																		->count();
-														
-														echo ($adameong);
-												?>
+														->count();
 										
-											@endif
-										) </span>
-									</a>
-								</li>
-								
-
+										echo ($adameong);
+								?>
+						
+							@endif
+						) </span>
+					</a>
+				</li>
 				<!-- <ul class="main-nav nav navbar-right"> -->
 								<li class="hehe">
+									
 										<a id="navbarDropdown" class="hehe" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
 												{{ Auth::user()->name }} <span class="hehe"></span>
 										</a>
 
 										<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-											
+											<a class="dropdown-item" href="{{ route('cart.index') }}">
+													{{ __('Cart') }}
+											</a>
+											<br>
 											<a class="dropdown-item" href="{{ route('bukti') }}">
 													{{ __('Investasi saya') }}
 											</a>
@@ -187,16 +140,17 @@
 											</a>
 											<br>
 										
-										<a class="dropdown-item" href="{{ route('logout') }}"
+											<a class="dropdown-item" href="{{ route('logout') }}"
 													 onclick="event.preventDefault();
 																				 document.getElementById('logout-form').submit();">
 														{{ __('Logout') }}
-												</a>
+											</a>
 
 												<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 														@csrf
 												</form>
 										</div>
+						
 								</li>
 							<!-- </ul> -->
 

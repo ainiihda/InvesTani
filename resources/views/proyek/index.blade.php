@@ -32,15 +32,15 @@
   <!-- store products -->
   <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-    @forelse($proyek as $proyeks)
+    @forelse($proyek as $proyek)
     <!-- product -->
     <div class="col-md-4 col-xs-6">
       <div class="product">
         <div class="product-img">
-          <img width="210" height="340" src="{{ asset('storage/'.$proyeks->foto1) }}" alt="">
+          <img width="210" height="340" src="{{ asset('storage/'.$proyek->foto1) }}" alt="">
           <div class="product-label">
             <span class="new">
-              @if ($proyeks->category_id === 1)
+              @if ($proyek->category_id === 1)
               Tanah
               @else
               Proyek
@@ -49,11 +49,11 @@
           </div>
         </div>
         <div class="product-body">
-          <p class="product-category">Target : {{ $proyeks->target_investasi }}</p>
-          <h3 class="product-name"><a href="#"> {{ $proyeks->nama }} </a></h3>
-          <h4 class="product-price">Mulai Dari : {{ $proyeks->min_investasi }}</h4>
+          <p class="product-category">Target : Rp. {{ $proyek->target_investasi }}</p>
+          <h3 class="product-name"><a href="#"> {{ $proyek->nama }} </a></h3>
+          <h4 class="product-price">Mulai Dari : Rp. {{ $proyek->min_investasi }}</h4>
           <div class="product-rating">
-            <i>{{ $proyeks->deadline }}</i>
+            <i>{{ $proyek->deadline }}</i>
           </div>
           <div class="product-btns">
             <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
@@ -62,7 +62,7 @@
           </div>
         </div>
         <div class="add-to-cart">
-          <button class="add-to-cart-btn"><a href="{{ route('proyek.product', $proyeks->id) }}"> Investasi </a></button>
+          <button class="add-to-cart-btn"><a href="{{ route('proyek.product', $proyek->id) }}"> Investasi </a></button>
         </div>
       </div>
     </div>
@@ -72,12 +72,23 @@
     @empty
     <h3> No Proyek </h3>
     @endforelse
-
     
-    
-  </div>
-  </div>
 </div>
-{{ $proyek->links()}}
+  </div>
+  <!-- /store products -->
+
+  <!-- store bottom filter -->
+  <div class="store-filter clearfix">
+    <span class="store-qty">Showing 20-100 products</span>
+    <ul class="store-pagination">
+      <li class="active">1</li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+    </ul>
+  </div>
+  <!-- /store bottom filter -->
+</div>
 <!-- /STORE -->
 @endsection
